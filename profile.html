@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>ملفي الشخصي</title>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+  <script src="config.js"></script>
+  <style>
+    body { font-family:Arial; background:#f5f6fa; text-align:center; direction:rtl; }
+    .card { background:white; padding:20px; border-radius:15px; width:400px; margin:auto; box-shadow:0 5px 15px rgba(0,0,0,0.2); }
+    textarea { width:90%; padding:10px; border-radius:10px; margin:10px 0; }
+    button { width:90%; padding:10px; margin:10px 0; background:#667eea; border:none; color:white; border-radius:10px; font-weight:bold; cursor:pointer; }
+    button:hover { background:#764ba2; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>👤 ملفي الشخصي</h2>
+    <textarea id="info" placeholder="اكتب معلوماتك هنا"></textarea>
+    <button onclick="saveInfo()">💾 حفظ</button>
+    <button onclick="logout()">🚪 تسجيل خروج</button>
+    <p><a href="index.html">🏠 رجوع للرئيسية</a></p>
+    <div id="message"></div>
+  </div>
+
+  <script>
+    auth.onAuthStateChanged(user=>{
+      if(!user) return window.location.href="auth.html";
+      db.collection("users").doc(user.uid).get().then(doc=>{
+        if(doc.exists) info.value = doc.data().info || "";
+      });
+    });
+    function saveInfo(){
+      let user = auth.currentUser;
+      db.collection("users").doc(user.uid).set({ info:info.value })
+      .then(()=> message.innerText="✅ تم الحفظ");
+    }
+    function logout(){ auth.signOut().then(()=>window.location.href="auth.html"); }
+  </script>
+</body>
+</html>

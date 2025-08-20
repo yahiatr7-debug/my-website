@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>تسجيل / دخول</title>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+  <script src="config.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; background:linear-gradient(135deg,#667eea,#764ba2); text-align:center; direction:rtl; color:white; padding:30px; }
+    .card { background:white; color:black; padding:20px; border-radius:15px; width:350px; margin:auto; }
+    input,button { width:90%; padding:10px; margin:8px; border-radius:10px; border:1px solid #ccc; }
+    button { border:none; background:#667eea; color:white; font-weight:bold; cursor:pointer; }
+    button:hover { background:#764ba2; }
+    #message { margin-top:10px; font-weight:bold; color:red; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>🔐 تسجيل / دخول</h2>
+    <input type="email" id="email" placeholder="📧 البريد الإلكتروني">
+    <input type="password" id="password" placeholder="🔑 كلمة المرور">
+    <button onclick="signup()">📝 إنشاء حساب</button>
+    <button onclick="login()">➡️ تسجيل الدخول</button>
+    <div id="message"></div>
+    <p><a href="index.html">🏠 رجوع للرئيسية</a></p>
+  </div>
+
+  <script>
+    function signup(){
+      auth.createUserWithEmailAndPassword(email.value, password.value)
+      .then(()=>{ window.location.href="profile.html"; })
+      .catch(err=> message.innerText="❌ "+err.message);
+    }
+    function login(){
+      auth.signInWithEmailAndPassword(email.value, password.value)
+      .then(()=>{ window.location.href="profile.html"; })
+      .catch(err=> message.innerText="❌ "+err.message);
+    }
+  </script>
+</body>
+</html>

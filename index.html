@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>الرئيسية</title>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+  <script src="config.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f5f6fa; text-align:center; direction:rtl; }
+    header { display:flex; justify-content:space-between; align-items:center; padding:15px; background:#667eea; color:white; }
+    nav a { margin:0 10px; color:white; text-decoration:none; font-weight:bold; }
+    nav a:hover { text-decoration:underline; }
+    #userInfo { display:flex; align-items:center; gap:10px; }
+    #userPhoto { width:40px; height:40px; border-radius:50%; border:2px solid #fff; }
+    button { padding:8px 15px; border:none; border-radius:10px; background:#fff; color:#667eea; font-weight:bold; cursor:pointer; }
+    button:hover { background:#764ba2; color:white; }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html">🏠 الرئيسية</a>
+      <a href="about.html">ℹ️ من نحن</a>
+      <a href="contact.html">📩 اتصل بنا</a>
+      <a href="profile.html">👤 ملفي</a>
+    </nav>
+    <div id="userInfo">
+      <img id="userPhoto" src="https://www.w3schools.com/howto/img_avatar.png">
+      <span id="userEmail">غير مسجل دخول</span>
+      <button onclick="goLogin()">تسجيل الدخول</button>
+    </div>
+  </header>
+
+  <h1>🌐 مرحبا بك في موقعي</h1>
+  <p>هذا الموقع تجريبي للتعلم على Firebase و HTML.</p>
+
+  <script>
+    auth.onAuthStateChanged(user => {
+      const userEmail = document.getElementById("userEmail");
+      const userPhoto = document.getElementById("userPhoto");
+      if(user){
+        userEmail.innerText = user.email;
+        userPhoto.src = user.photoURL || "https://www.w3schools.com/howto/img_avatar.png";
+      } else {
+        userEmail.innerText = "غير مسجل دخول";
+        userPhoto.src = "https://www.w3schools.com/howto/img_avatar.png";
+      }
+    });
+    function goLogin(){ window.location.href="auth.html"; }
+  </script>
+</body>
+</html>
